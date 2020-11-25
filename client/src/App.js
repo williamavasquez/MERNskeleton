@@ -1,40 +1,21 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
-
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Home from './pages/Home/Home'
 function App() {
-  useEffect(() => {
-    fetch('/api/users')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data)
-      })
-      .catch((err) => console.error(err))
-  }, [])
-
-  const getUsers = () => {
-    fetch('/api/createuser', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name: 'will', password: '123' }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data)
-      })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
-
   return (
-    <div>
-      <img src={logo} />
-      <h1>Hello</h1>
-      <button onClick={getUsers}>Click me</button>
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path='/'>
+            <Home />
+          </Route>
+
+          <Route>
+            <h1>404 NOT FOUND</h1>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   )
 }
 
