@@ -1,4 +1,4 @@
-import express from 'express'
+const express = require('express')
 
 const testRouter = express.Router()
 
@@ -7,4 +7,4 @@ testRouter.get('/', (req, res) => {
   res.send('hello')
 })
 
-export default testRouter
+module.exports =  testRouter

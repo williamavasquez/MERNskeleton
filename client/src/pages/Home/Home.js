@@ -13,12 +13,18 @@ function Home() {
   }, [])
 
   const getUsers = () => {
-    fetch('/api/createuser', {
+    let dataSample = {
+      name:"William",
+      email: "william@william.com",
+      password:"1234"
+    }
+
+    fetch('/auth/register_login', {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: 'will22', password: '123' }),
+      body: JSON.stringify(dataSample),
     })
       .then((response) => response.json())
       .then((data) => {

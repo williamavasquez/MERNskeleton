@@ -1,17 +1,25 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import path from 'path'
-import morgan from 'morgan'
-import dotenv from 'dotenv'
+//Imported PAckages
+const express = require( 'express')
+const session = require( 'express-session')
+const MongoStore = require( 'connect-mongo')(session)
+const mongoose = require( 'mongoose')
+const morgan = require( 'morgan')
+const dotenv = require( 'dotenv')
 
-import testRouter from './routes/testRouters.mjs'
-import router from './routes/api.mjs'
+// Node native packages
+const path = require( 'path')
+
+//Routes and or Files
+const passport = require( './passport/setup.js')
+const auth = require( './routes/auth.js')
+const testRouter = require( './routes/testRouters.js')
+const router = require( './routes/api.js')
 
 dotenv.config({ silent: process.env.NODE_ENV === 'production' })
 
-const __dirname = path.resolve()
 const PORT = process.env.PORT
 const app = express()
+
 
 app.use(morgan('tiny'))
 app.use(express.urlencoded({ extended: true }))
@@ -26,7 +34,24 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/users', {
   useFindAndModify: false,
 })
 
+
+// Express Session
+app.use(
+  session({
+      secret: "very secret this is",
+      resave: false,
+      saveUninitialized: true,
+      store: new MongoStore({ mongooseConnection: mongoose.connection })
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 // routes
+app.use("/auth", auth);
 app.use('/api', router)
 app.use('/r', testRouter)
 

@@ -1,5 +1,5 @@
-import User from '../models/User.js'
-import express from 'express'
+const User = require( '../models/User.js')
+const express = require( 'express')
 
 const router = express.Router()
 
@@ -14,4 +14,4 @@ router.post('/createuser', ({ body }, res) => {
     .catch((err) => res.status(400).json(err))
 })
 
-export default router
+module.exports = router
