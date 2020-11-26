@@ -18,7 +18,7 @@ function Home() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: 'will', password: '123' }),
+      body: JSON.stringify({ name: 'will22', password: '123' }),
     })
       .then((response) => response.json())
       .then((data) => {
