@@ -4,19 +4,19 @@ import './Home.css'
 
 function Home() {
   useEffect(() => {
-    fetch('/api/users')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data)
-      })
-      .catch((err) => console.error(err))
+    // fetch('/api/users')
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log('Success:', data)
+    //   })
+    //   .catch((err) => console.error(err))
   }, [])
 
   const getUsers = () => {
     let dataSample = {
-      name:"William",
-      email: "william@william.com",
-      password:"1234"
+      name: 'William',
+      email: 'william@william.com',
+      password: '1234',
     }
 
     fetch('/auth/register_login', {

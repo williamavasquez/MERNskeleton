@@ -1,25 +1,24 @@
 //Imported PAckages
-const express = require( 'express')
-const session = require( 'express-session')
-const MongoStore = require( 'connect-mongo')(session)
-const mongoose = require( 'mongoose')
-const morgan = require( 'morgan')
-const dotenv = require( 'dotenv')
+const express = require('express')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const mongoose = require('mongoose')
+const morgan = require('morgan')
+const dotenv = require('dotenv')
 
 // Node native packages
-const path = require( 'path')
+const path = require('path')
 
 //Routes and or Files
-const passport = require( './passport/setup.js')
-const auth = require( './routes/auth.js')
-const testRouter = require( './routes/testRouters.js')
-const router = require( './routes/api.js')
+const passport = require('./passport/setup.js')
+const auth = require('./routes/auth.js')
+const testRouter = require('./routes/testRouters.js')
+const router = require('./routes/api.js')
 
 dotenv.config({ silent: process.env.NODE_ENV === 'production' })
 
 const PORT = process.env.PORT
 const app = express()
-
 
 app.use(morgan('tiny'))
 app.use(express.urlencoded({ extended: true }))
@@ -34,24 +33,22 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/users', {
   useFindAndModify: false,
 })
 
-
 // Express Session
 app.use(
   session({
-      secret: "very secret this is",
-      resave: false,
-      saveUninitialized: true,
-      store: new MongoStore({ mongooseConnection: mongoose.connection })
+    secret: 'very secret this is',
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })
-);
+)
 
 // Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
+app.use(passport.initialize())
+app.use(passport.session())
 
 // routes
-app.use("/auth", auth);
+app.use('/auth', auth)
 app.use('/api', router)
 app.use('/r', testRouter)
 
