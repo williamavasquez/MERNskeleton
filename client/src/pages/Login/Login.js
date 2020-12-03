@@ -25,7 +25,7 @@ const Login = (props) => {
       .then((data) => {
         dispatch({
           type: 'loggedInUser',
-          payload: true,
+          payload: data,
         })
 
         props.history.push('/home')
